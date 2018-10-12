@@ -13,7 +13,7 @@ export const send = (
 };
 
 export const upsert = (collection, selector, document, req, res) => {
-  collection.updateOne(
+  collection.save(
     selector,
     document,
     { upsert: true, fullResult: true },

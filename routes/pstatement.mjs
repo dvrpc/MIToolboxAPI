@@ -10,7 +10,7 @@ export default app => {
   });
 
   app.get("/pstatement/:id", cache(100), (req, res) => {
-    Pstatement.findById(req.params.id).exec((err, result) =>
+    Pstatement.findById(req.params.id).populate('tools').exec((err, result) =>
       send(err, result, result => result, req, res)
     );
   });
@@ -33,5 +33,15 @@ export default app => {
     Pstatement.findOneAndUpdate({ description }, pstatement, {
       new: true
     }).exec((err, result) => send(err, result, result => result, req, res));
+  });
+
+  app.patch("/pstatement/:id", (req, res) => {
+    Pstatement.findByIdAndUpdate(
+      req.params.id,
+      { $push: { tools: { $each: [].concat(req.body.tools) } } },
+      {
+        new: true
+      }
+    ).exec((err, result) => send(err, result, result => result, req, res));
   });
 };

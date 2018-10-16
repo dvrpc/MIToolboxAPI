@@ -10,7 +10,7 @@ export default app => {
   });
 
   app.get("/word/:name", cache(100), (req, res) => {
-    Word.findOne({ name: req.params.name }).exec((err, result) =>
+    Word.findOne({ name: req.params.name }).populate('pstatements').exec((err, result) =>
       send(err, result, result => result, req, res)
     );
   });
@@ -34,5 +34,15 @@ export default app => {
     Word.findOneAndUpdate({ name }, word, {
       new: true
     }).exec((err, result) => send(err, result, result => result, req, res));
+  });
+
+  app.patch("/word/:name", (req, res) => {
+    Word.findOneAndUpdate(
+      { name: req.params.name },
+      { $push: { pstatements: { $each: [].concat(req.body.pstatements) } } },
+      {
+        new: true
+      }
+    ).exec((err, result) => send(err, result, result => result, req, res));
   });
 };

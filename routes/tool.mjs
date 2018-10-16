@@ -22,7 +22,7 @@ export default app => {
   });
 
   app.delete("/tool/:id", (req, res) => {
-    Tool.FindByIdAndRemove(req.params.id).exec((err, result) =>
+    Tool.findByIdAndRemove(req.params.id).exec((err, result) =>
       send(err, result, result => result, req, res)
     );
   });

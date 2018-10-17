@@ -11,6 +11,6 @@ mongoose.set("debug", true);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-routes(app);
+app.use("/mitoolbox", routes);
 
 app.listen(port, () => console.log(`Running on port ${port}`));

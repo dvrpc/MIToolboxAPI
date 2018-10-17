@@ -2,15 +2,16 @@
   "name": "mitoolboxapi",
   "version": "1.0.0",
   "description": "",
-  "main": "server.mjs",
+  "main": "server.js",
   "scripts": {
-    "start": "node --experimental-modules server.mjs",
+    "start": "node -r esm server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jesse Strangfeld <jstrangfeld@dvrpc.org>",
   "license": "CC0-1.0",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "esm": "^3.0.84",
     "express": "^4.16.3",
     "memory-cache": "^0.2.0",
     "mongoose": "^5.3.2"

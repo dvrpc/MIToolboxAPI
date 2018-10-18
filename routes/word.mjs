@@ -17,19 +17,19 @@ router.get("/:name", cache(100), (req, res) => {
   );
 });
 
-router.post("/word", (req, res) => {
+router.post("/", (req, res) => {
   new Word(req.body).save((err, result) =>
     send(err, result, result => result, req, res)
   );
 });
 
-router.delete("/word/:name", (req, res) => {
+router.delete("/:name", (req, res) => {
   Word.findOneAndDelete({ name: req.params.name }).exec((err, result) =>
     send(err, result, () => `Word ${req.params.name} deleted`, req, res)
   );
 });
 
-router.put("/word/:name", (req, res) => {
+router.put("/:name", (req, res) => {
   const word = new Word(req.body);
   const { name } = word;
   delete word._id;
@@ -38,7 +38,7 @@ router.put("/word/:name", (req, res) => {
   }).exec((err, result) => send(err, result, result => result, req, res));
 });
 
-router.patch("/word/:name", (req, res) => {
+router.patch("/:name", (req, res) => {
   Word.findOneAndUpdate(
     { name: req.params.name },
     { $push: { pstatements: { $each: [].concat(req.body.pstatements) } } },

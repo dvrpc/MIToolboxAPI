@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", cache(100), (req, res) => {
   Word.find({}).exec((err, items) =>
-    send(err, items, items => items.map(item => item.name), req, res)
+    send(err, items, items => items, req, res)
   );
 });
 

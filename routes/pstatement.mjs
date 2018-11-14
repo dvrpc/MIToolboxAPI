@@ -6,15 +6,15 @@ import cache from "../utils/cache";
 const router = express.Router();
 
 router.get("/", cache(100), (req, res) => {
-  Pstatement.find({}).exec((err, items) =>
+  Pstatement.find({}, "-tools").exec((err, items) =>
     send(err, items, items => items, req, res)
   );
 });
 
 router.get("/:id", cache(100), (req, res) => {
-  Pstatement.findById(req.params.id).populate('tools').exec((err, result) =>
-    send(err, result, result => result, req, res)
-  );
+  Pstatement.findById(req.params.id)
+    .populate("tools")
+    .exec((err, result) => send(err, result, result => result, req, res));
 });
 
 router.post("/", (req, res) => {

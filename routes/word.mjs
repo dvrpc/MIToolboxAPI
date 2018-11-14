@@ -12,9 +12,9 @@ router.get("/", cache(100), (req, res) => {
 });
 
 router.get("/:name", cache(100), (req, res) => {
-  Word.findOne({ name: req.params.name }).populate('pstatements').exec((err, result) =>
-    send(err, result, result => result, req, res)
-  );
+  Word.findOne({ name: req.params.name })
+    .populate("pstatements")
+    .exec((err, result) => send(err, result, result => result, req, res));
 });
 
 router.post("/", (req, res) => {

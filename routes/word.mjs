@@ -13,7 +13,14 @@ router.get("/", cache(100), (req, res) => {
 
 router.get("/:name", cache(100), (req, res) => {
   Word.findOne({ name: req.params.name })
-    .populate("pstatements")
+    .populate({
+      path: "pstatements",
+      populate: {
+        path: "tools",
+        model: "Tool",
+        select: "name"
+      }
+     })
     .exec((err, result) => send(err, result, result => result, req, res));
 });
 

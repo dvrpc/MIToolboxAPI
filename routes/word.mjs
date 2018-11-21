@@ -6,7 +6,7 @@ import cache from "../utils/cache";
 const router = express.Router();
 
 router.get("/", cache(100), (req, res) => {
-  Word.find({}).exec((err, items) =>
+  Word.find({}, "-pstatements").exec((err, items) =>
     send(err, items, items => items, req, res)
   );
 });

@@ -6,8 +6,8 @@ const toolSchema = new Schema({
   description: String,
   categories: [String],
   resources: [{ label: String, href: String }],
-  cases: [{ label: String, href: String }],
-  models: [{ label: String, href: String }]
+  case_studies: [{ label: String, href: String }],
+  ordinances: [{ label: String, href: String }]
 });
 
 export default mongoose.model("Tool", toolSchema);

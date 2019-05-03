@@ -6,7 +6,10 @@ import routes from "./routes";
 const port = process.env.PORT || 3000;
 const app = express();
 
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL, {
+  server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+});
 mongoose.set("debug", true);
 
 app.use(bodyParser.urlencoded({ extended: true }));

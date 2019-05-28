@@ -1,5 +1,6 @@
 import express from "express";
 import Tool from "../models/tool";
+import Section from "../models/section";
 import { send } from "../utils";
 import cache from "../utils/cache";
 
@@ -11,10 +12,25 @@ router.get("/", cache(100), (req, res) => {
   );
 });
 
-router.get("/:id", cache(100), (req, res) => {
-  Tool.findById(req.params.id).exec((err, result) =>
-    send(err, result, result => result, req, res)
-  );
+router.get("/:id", cache(100), async (req, res) => {
+  Section.findOne({ tools: { $in: req.params.id } })
+    .populate("tools", "name")
+    .exec((err, section) => {
+      Tool.findById(req.params.id).exec((err, result) =>
+        send(
+          err,
+          result,
+          result => {
+            if (section) {
+              result.relatedTools = section.tools;
+            }
+            return result;
+          },
+          req,
+          res
+        )
+      );
+    });
 });
 
 router.post("/", (req, res) => {
